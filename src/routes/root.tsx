@@ -1,9 +1,20 @@
 import { Outlet } from "react-router-dom";
+import { Button } from "primereact/button";
 
 export default function Root() {
   return (
     <>
       <div id="sidebar">
+        <h1 className="text-3xl font-bold underline">Hello world!</h1>
+        <div className="grid grid-cols-3 gap-4">
+          <div className="...">01</div>
+          <div className="...">02</div>
+          <div className="...">03</div>
+          <div className="col-span-2 ...">04</div>
+          <div className="...">05</div>
+          <div className="...">06</div>
+          <div className="col-span-2 ...">07</div>
+        </div>
         <h1>React Router Contacts</h1>
         <div>
           <form id="search-form" role="search">
@@ -18,7 +29,7 @@ export default function Root() {
             <div className="sr-only" aria-live="polite"></div>
           </form>
           <form method="post">
-            <button type="submit">New</button>
+            <Button type="submit">New</Button>
           </form>
         </div>
         <nav>

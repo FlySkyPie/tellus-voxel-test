@@ -1,11 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { PrimeReactProvider } from "primereact/api";
 
 import Root from "./routes/root.tsx";
 import Contact from "./routes/contact";
 import ErrorPage from "./error-page";
-import "./index.css";
+import "./style.css";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <PrimeReactProvider>
+      <RouterProvider router={router} />
+    </PrimeReactProvider>
   </React.StrictMode>
 );
