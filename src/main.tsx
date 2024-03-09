@@ -2,10 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { PrimeReactProvider } from "primereact/api";
-import 'primeicons/primeicons.css';
+import "primeicons/primeicons.css";
 
 import Root from "./routes/root.tsx";
 import Contact from "./routes/contact";
+import { Home } from "./pages/home.tsx";
 import ErrorPage from "./error-page";
 import "./style.css";
 
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: "",
+        element: <Home />,
+      },
       {
         path: "contacts/:contactId",
         element: <Contact />,
