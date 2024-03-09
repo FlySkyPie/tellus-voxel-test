@@ -12,3 +12,16 @@ tailwind-utilities;
     @tailwind components;
     @tailwind utilities;
 }
+
+.p-panelmenu-panel.active {
+    pointer-events: none;
+
+    .p-panelmenu-header-link {
+
+        color: var(--primary-color);
+
+        &:focus {
+            background: unset;
+        }
+    }
+}

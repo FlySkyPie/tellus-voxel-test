@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { PrimeReactProvider } from "primereact/api";
+import 'primeicons/primeicons.css';
 
 import Root from "./routes/root.tsx";
 import Contact from "./routes/contact";

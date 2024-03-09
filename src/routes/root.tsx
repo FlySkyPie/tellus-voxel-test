@@ -1,51 +1,25 @@
 import { Outlet } from "react-router-dom";
-import { Button } from "primereact/button";
+import { Avatar } from "primereact/avatar";
+
+import { NavigationList } from "../layouts/navigation-list";
 
 export default function Root() {
   return (
-    <>
-      <div id="sidebar">
-        <h1 className="text-3xl font-bold underline">Hello world!</h1>
-        <div className="grid grid-cols-3 gap-4">
-          <div className="...">01</div>
-          <div className="...">02</div>
-          <div className="...">03</div>
-          <div className="col-span-2 ...">04</div>
-          <div className="...">05</div>
-          <div className="...">06</div>
-          <div className="col-span-2 ...">07</div>
+    <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8">
+      <div className="hidden lg:block fixed z-20 inset-0 left-[max(0px,calc(50%-45rem))] right-auto w-[19rem] pb-10 pl-8 pr-6 overflow-y-auto">
+        <span className="inline-flex align-items-center gap-1 px-2 py-2 my-4">
+          <Avatar label="TV" shape="circle" />
+          <span className="font-medium text-xl">Tellus Voxel</span>
+        </span>
+        <div className="card flex justify-content-center">
+          <NavigationList />
         </div>
-        <h1>React Router Contacts</h1>
-        <div>
-          <form id="search-form" role="search">
-            <input
-              id="q"
-              aria-label="Search contacts"
-              placeholder="Search"
-              type="search"
-              name="q"
-            />
-            <div id="search-spinner" aria-hidden hidden={true} />
-            <div className="sr-only" aria-live="polite"></div>
-          </form>
-          <form method="post">
-            <Button type="submit">New</Button>
-          </form>
+      </div>
+      <div className="lg:pl-[19.5rem]">
+        <div className="max-w-3xl mx-auto relative z-20 xl:max-w-none">
+          <Outlet />
         </div>
-        <nav>
-          <ul>
-            <li>
-              <a href={`/contacts/1`}>Your Name</a>
-            </li>
-            <li>
-              <a href={`/contacts/2`}>Your Friend</a>
-            </li>
-          </ul>
-        </nav>
       </div>
-      <div id="detail">
-        <Outlet />
-      </div>
-    </>
+    </div>
   );
 }
