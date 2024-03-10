@@ -5,8 +5,9 @@ import { PrimeReactProvider } from "primereact/api";
 import "primeicons/primeicons.css";
 
 import Root from "./routes/root.tsx";
-import Contact from "./routes/contact";
 import { Home } from "./pages/home.tsx";
+import { NotFound } from "./pages/not-found.tsx";
+import { Voxels } from "./pages/voxels/voxels.tsx";
 import ErrorPage from "./error-page";
 import "./style.css";
 
@@ -21,8 +22,12 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "contacts/:contactId",
-        element: <Contact />,
+        path: "voxels",
+        element: <Voxels />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },

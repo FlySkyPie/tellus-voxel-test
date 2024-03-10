@@ -16,12 +16,20 @@ export const NavigationList: React.FC = () => {
         command: () => navigate("/"),
       },
       {
-        label: "Contacts",
+        label: "Unit Cells",
         icon: "pi pi-box",
         className: clsx(
-          matchPath("/contacts/*", location.pathname) && "active"
+          matchPath("/unit-cells", location.pathname) && "active"
         ),
-        command: () => navigate("/contacts/123"),
+        command: () => navigate("/unit-cells"),
+      },
+      {
+        label: "Voxels",
+        icon: "pi pi-box",
+        className: clsx(
+          matchPath("/voxels", location.pathname) && "active"
+        ),
+        command: () => navigate("/voxels"),
       },
     ],
     [location.pathname, navigate]
