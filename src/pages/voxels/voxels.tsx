@@ -7,10 +7,12 @@ import { useLiveQuery } from "dexie-react-hooks";
 import type { VoxelItem } from "../../interfaces/voxel-item";
 import { db } from "../../db";
 import { useNewVoxel } from "../../dialogs/use-new-voxel/use-new-voxel";
+import { useConfirm } from "../../dialogs/use-confirm/use-confirm";
 
 export const Voxels: React.FC = () => {
-  const voxles = useLiveQuery(() => db.voxels.toArray());
+  const voxels = useLiveQuery(() => db.voxels.toArray());
   const { dialogView, openDialog } = useNewVoxel();
+  const { dialogView: confirmDialog, openDialog: openConfirm } = useConfirm();
 
   const header = useMemo(() => {
     return (
@@ -23,7 +25,9 @@ export const Voxels: React.FC = () => {
             if (result.type === "cancel") {
               return;
             }
-            console.log(result)
+
+            await db.voxels.add(result.value);
+            console.log(result);
           }}
         />
       </div>
@@ -34,35 +38,56 @@ export const Voxels: React.FC = () => {
     ({ id }: VoxelItem): React.ReactNode => {
       return (
         <div
-          className="w-8 h-8 rounded"
-          style={{ backgroundColor: `#${id.toString(16)}` }}
+          className="w-8 h-8 rounded border-2"
+          style={{ backgroundColor: `#${id.toString(16).padStart(6, "0")}` }}
         />
       );
     },
     []
   );
 
-  const renderEditColumn = useCallback((): React.ReactNode => {
-    return <Button icon="pi pi-pencil" rounded />;
+  const renderEditColumn = useCallback(({ id }: VoxelItem): React.ReactNode => {
+    return (
+      <div className="flex flex-row gap-1">
+        <Button icon="pi pi-pencil" rounded />
+        <Button
+          icon="pi pi-trash"
+          rounded
+          onClick={async () => {
+            const result = await openConfirm(
+              "Remove",
+              "Are you sure want to remove the voxel?"
+            );
+            if (result.type === "cancel") {
+              return;
+            }
+            await db.voxels.delete(id);
+          }}
+        />
+      </div>
+    );
   }, []);
 
   return (
     <div className="card">
       <DataTable
-        value={voxles}
+        value={voxels}
         header={header}
         tableStyle={{ minWidth: "60rem" }}
       >
         <Column
           field="id"
           header="id"
-          body={({ id }: VoxelItem) => id.toString(16)}
+          body={({ id }: VoxelItem) => (
+            <code>{"#" + id.toString(16).padStart(6, "0")}</code>
+          )}
         />
         <Column header="Color" body={renderColorColumn}></Column>
         <Column field="name" header="Name"></Column>
         <Column header="Operation" body={renderEditColumn} />
       </DataTable>
       {dialogView}
+      {confirmDialog}
     </div>
   );
 };
