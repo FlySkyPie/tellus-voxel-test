@@ -8,21 +8,29 @@ type FormValues = {
 };
 
 type IProps = {
+  value: {
+    id: string;
+    name: string;
+  };
+
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (id: number, name: string) => void;
 };
 
-export const Dialog: React.FC<IProps> = ({ isOpen, onClose, onSubmit }) => {
+export const Dialog: React.FC<IProps> = ({
+  value,
+  isOpen,
+  onClose,
+  onSubmit,
+}) => {
   const {
     register,
     watch,
     formState: { errors },
     handleSubmit,
   } = useForm<FormValues>({
-    defaultValues: {
-      id: "000000",
-    },
+    defaultValues: value,
   });
 
   const [id] = watch(["id"]);
@@ -31,14 +39,13 @@ export const Dialog: React.FC<IProps> = ({ isOpen, onClose, onSubmit }) => {
     <PriDialog
       visible={isOpen}
       modal
-      header="Add Voxel"
+      header="Edit Voxel"
       style={{ width: "50rem" }}
       onHide={onClose}
     >
       <form
         className="space-y-6"
         onSubmit={handleSubmit(({ id, name }) => {
-          console.log(id, typeof id, name);
           onSubmit(Number(`0x${id}`), name);
         })}
       >
@@ -85,7 +92,7 @@ export const Dialog: React.FC<IProps> = ({ isOpen, onClose, onSubmit }) => {
             type="submit"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Add
+            Update
           </button>
         </div>
       </form>

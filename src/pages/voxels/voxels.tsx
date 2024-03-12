@@ -8,10 +8,12 @@ import type { VoxelItem } from "../../interfaces/voxel-item";
 import { db } from "../../db";
 import { useNewVoxel } from "../../dialogs/use-new-voxel/use-new-voxel";
 import { useConfirm } from "../../dialogs/use-confirm/use-confirm";
+import { useEditVoxel } from "../../dialogs/use-edit-voxel/use-edit-voxel";
 
 export const Voxels: React.FC = () => {
   const voxels = useLiveQuery(() => db.voxels.toArray());
   const { dialogView, openDialog } = useNewVoxel();
+  const { dialogView: editDialog, openDialog: editVoxel } = useEditVoxel();
   const { dialogView: confirmDialog, openDialog: openConfirm } = useConfirm();
 
   const header = useMemo(() => {
@@ -46,27 +48,41 @@ export const Voxels: React.FC = () => {
     []
   );
 
-  const renderEditColumn = useCallback(({ id }: VoxelItem): React.ReactNode => {
-    return (
-      <div className="flex flex-row gap-1">
-        <Button icon="pi pi-pencil" rounded />
-        <Button
-          icon="pi pi-trash"
-          rounded
-          onClick={async () => {
-            const result = await openConfirm(
-              "Remove",
-              "Are you sure want to remove the voxel?"
-            );
-            if (result.type === "cancel") {
-              return;
-            }
-            await db.voxels.delete(id);
-          }}
-        />
-      </div>
-    );
-  }, []);
+  const renderEditColumn = useCallback(
+    ({ id, name }: VoxelItem): React.ReactNode => {
+      return (
+        <div className="flex flex-row gap-1">
+          <Button
+            icon="pi pi-pencil"
+            rounded
+            onClick={async () => {
+              const result = await editVoxel(id, name);
+              if (result.type === "cancel") {
+                return;
+              }
+              const { value } = result;
+              await db.voxels.update(id, value);
+            }}
+          />
+          <Button
+            icon="pi pi-trash"
+            rounded
+            onClick={async () => {
+              const result = await openConfirm(
+                "Remove",
+                "Are you sure want to remove the voxel?"
+              );
+              if (result.type === "cancel") {
+                return;
+              }
+              await db.voxels.delete(id);
+            }}
+          />
+        </div>
+      );
+    },
+    [openConfirm]
+  );
 
   return (
     <div className="card">
@@ -88,6 +104,7 @@ export const Voxels: React.FC = () => {
       </DataTable>
       {dialogView}
       {confirmDialog}
+      {editDialog}
     </div>
   );
 };
