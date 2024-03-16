@@ -12,13 +12,8 @@ import {
 } from "@react-three/drei";
 
 import { UnitCells } from "./unit-cells";
-
-enum SymmetrieTypes {
-  Solid = "S",
-  XZ_Reflection = "XZR",
-  Y_Rotation = "YR",
-  Y_Symmetric_Rotation = "YSR",
-}
+import { SymmetrieTypes } from "./symmetrie-types";
+import { useCombination } from "./use-combination";
 
 const symmetrieOptions = [
   { name: "Solid", code: SymmetrieTypes.Solid },
@@ -28,8 +23,11 @@ const symmetrieOptions = [
 ];
 
 export const Symmetries: React.FC = () => {
-  const [value, setValue] = useState(symmetrieOptions[0]);
+  const [type, setType] = useState(() => symmetrieOptions[0]);
   const [color, setColore] = useState(0x0000);
+  const { options, combination, setCombination } = useCombination({
+    type: type.code,
+  });
 
   const colorCode = useMemo(
     () => `#${color.toString(16).padStart(6, "0")}`,
@@ -37,52 +35,12 @@ export const Symmetries: React.FC = () => {
   );
 
   const unitCellsView = useMemo(() => {
-    if (value.code === SymmetrieTypes.Solid) {
-      const colors = Array.from({ length: 8 }, () => color);
-      return <UnitCells colors={colors} />;
-    }
-
-    if (value.code === SymmetrieTypes.XZ_Reflection) {
-      const down = color;
-      const up = color + 1;
-      const colors = [down, down, up, up, down, down, up, up];
-      return <UnitCells colors={colors} />;
-    }
-
-    if (value.code === SymmetrieTypes.Y_Rotation) {
-      const corner0 = color;
-      const corner1 = color + 1;
-      const corner2 = color + 2;
-      const corner3 = color + 3;
-      const colors = [
-        corner0,
-        corner1,
-        corner0,
-        corner1,
-        corner2,
-        corner3,
-        corner2,
-        corner3,
-      ];
-      return <UnitCells colors={colors} />;
-    }
-
-    if (value.code === SymmetrieTypes.Y_Symmetric_Rotation) {
-      const colors = [
-        color,
-        color + 1,
-        color + 2,
-        color + 3,
-        color + 4,
-        color + 5,
-        color + 6,
-        color + 7,
-      ];
-      return <UnitCells colors={colors} />;
-    }
-
-    return null;
-  }, [color, value.code]);
+    const colors = Array.from(
+      { length: 8 },
+      (_, index) => color + combination.offsets[index]
+    );
+    return <UnitCells colors={colors} />;
+  }, [color, combination.offsets]);
 
   return (
     <div className="flex flex-col h-lvh">
@@ -108,14 +66,27 @@ export const Symmetries: React.FC = () => {
             </div>
           </div>
         </div>
-        <Dropdown
-          value={value}
-          onChange={(e) => setValue(e.value)}
-          options={symmetrieOptions}
-          optionLabel="name"
-          placeholder="Select a Symmetry type"
-          className="md:w-14rem"
-        />
+        <div className="flex gap-2">
+          <Dropdown
+            value={combination}
+            onChange={(e) => setCombination(e.value)}
+            options={options}
+            optionLabel="name"
+            placeholder="Select a Combination"
+            className="md:w-14rem min-w-52"
+          />
+
+          <Dropdown
+            value={type}
+            onChange={(e) => {
+              setType(e.value);
+            }}
+            options={symmetrieOptions}
+            optionLabel="name"
+            placeholder="Select a Symmetry type"
+            className="md:w-14rem min-w-60"
+          />
+        </div>
       </div>
       <div id="canvas-container" className="flex-grow p-4">
         <Canvas camera={{ position: [3, 2, 3], fov: 25 }}>
