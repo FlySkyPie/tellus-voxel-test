@@ -1,14 +1,17 @@
 import { ColorPicker } from "primereact/colorpicker";
 import { Dropdown } from "primereact/dropdown";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
+  Edges,
   Environment,
   GizmoHelper,
   GizmoViewport,
   Grid,
   OrbitControls,
 } from "@react-three/drei";
+
+import { UnitCells } from "./unit-cells";
 
 enum SymmetrieTypes {
   Solid = "S",
@@ -26,7 +29,36 @@ const symmetrieOptions = [
 
 export const Symmetries: React.FC = () => {
   const [value, setValue] = useState(symmetrieOptions[0]);
-  const [color, setColore] = useState(0);
+  const [color, setColore] = useState(0x0000);
+
+  const colorCode = useMemo(
+    () => `#${color.toString(16).padStart(6, "0")}`,
+    [color]
+  );
+
+  const unitCellsView = useMemo(() => {
+    if (value.code === SymmetrieTypes.Solid) {
+      return (
+        <>
+          <UnitCells color={color} />
+        </>
+      );
+    }
+
+    if (value.code === SymmetrieTypes.XZ_Reflection) {
+      return null;
+    }
+
+    if (value.code === SymmetrieTypes.Y_Rotation) {
+      return null;
+    }
+
+    if (value.code === SymmetrieTypes.Y_Symmetric_Rotation) {
+      return null;
+    }
+
+    return null;
+  }, [color, value.code]);
 
   return (
     <div className="flex flex-col h-lvh">
@@ -64,9 +96,13 @@ export const Symmetries: React.FC = () => {
       <div id="canvas-container" className="flex-grow p-4">
         <Canvas camera={{ position: [10, 12, 12], fov: 25 }}>
           <Environment preset="city" />
-          <mesh>
-            <boxGeometry />
-            <meshStandardMaterial color={color} />
+
+          {unitCellsView}
+
+          <mesh renderOrder={999999} >
+            <boxGeometry args={[1.01, 1.01, 1.01]} />
+            <meshStandardMaterial transparent opacity={0} />
+            <Edges linewidth={5} scale={1} threshold={15} color={colorCode} />
           </mesh>
 
           <Grid
