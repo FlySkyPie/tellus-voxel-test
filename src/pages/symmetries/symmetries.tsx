@@ -38,23 +38,47 @@ export const Symmetries: React.FC = () => {
 
   const unitCellsView = useMemo(() => {
     if (value.code === SymmetrieTypes.Solid) {
-      return (
-        <>
-          <UnitCells color={color} />
-        </>
-      );
+      const colors = Array.from({ length: 8 }, () => color);
+      return <UnitCells colors={colors} />;
     }
 
     if (value.code === SymmetrieTypes.XZ_Reflection) {
-      return null;
+      const down = color;
+      const up = color + 1;
+      const colors = [down, down, up, up, down, down, up, up];
+      return <UnitCells colors={colors} />;
     }
 
     if (value.code === SymmetrieTypes.Y_Rotation) {
-      return null;
+      const corner0 = color;
+      const corner1 = color + 1;
+      const corner2 = color + 2;
+      const corner3 = color + 3;
+      const colors = [
+        corner0,
+        corner1,
+        corner0,
+        corner1,
+        corner2,
+        corner3,
+        corner2,
+        corner3,
+      ];
+      return <UnitCells colors={colors} />;
     }
 
     if (value.code === SymmetrieTypes.Y_Symmetric_Rotation) {
-      return null;
+      const colors = [
+        color,
+        color + 1,
+        color + 2,
+        color + 3,
+        color + 4,
+        color + 5,
+        color + 6,
+        color + 7,
+      ];
+      return <UnitCells colors={colors} />;
     }
 
     return null;
@@ -94,12 +118,12 @@ export const Symmetries: React.FC = () => {
         />
       </div>
       <div id="canvas-container" className="flex-grow p-4">
-        <Canvas camera={{ position: [10, 12, 12], fov: 25 }}>
+        <Canvas camera={{ position: [3, 2, 3], fov: 25 }}>
           <Environment preset="city" />
 
           {unitCellsView}
 
-          <mesh renderOrder={999999} >
+          <mesh renderOrder={999999}>
             <boxGeometry args={[1.01, 1.01, 1.01]} />
             <meshStandardMaterial transparent opacity={0} />
             <Edges linewidth={5} scale={1} threshold={15} color={colorCode} />
