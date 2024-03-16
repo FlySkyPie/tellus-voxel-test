@@ -20,10 +20,18 @@ const getCombination = (type: SymmetrieTypes) => {
       [2, 0, 2, 0, 3, 1, 3, 1],
     ];
   }
-  /**
-   * @todo Finish the Combination
-   */
-  return [[0, 1, 2, 3, 4, 5, 6, 7]];
+
+  return [
+    [0, 1, 2, 3, 4, 5, 6, 7],
+    [1, 5, 3, 7, 0, 4, 2, 6],
+    [5, 4, 7, 6, 1, 0, 3, 2],
+    [4, 0, 6, 2, 5, 1, 7, 3],
+
+    [2, 3, 0, 1, 6, 7, 4, 5],
+    [3, 7, 1, 5, 2, 6, 0, 4],
+    [7, 6, 5, 4, 3, 2, 1, 0],
+    [6, 2, 4, 0, 7, 3, 5, 1],
+  ];
 };
 
 const getOptions = (type: SymmetrieTypes) => {
