@@ -8,6 +8,7 @@ import Root from "./routes/root.tsx";
 import { Home } from "./pages/home.tsx";
 import { NotFound } from "./pages/not-found.tsx";
 import { Voxels } from "./pages/voxels/voxels.tsx";
+import { Symmetries } from "./pages/symmetries/symmetries.tsx";
 import ErrorPage from "./error-page";
 import "./style.css";
 
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "voxels",
         element: <Voxels />,
+      },
+      {
+        path: "symmetries",
+        element: <Symmetries />,
       },
       {
         path: "*",

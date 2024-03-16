@@ -62,7 +62,6 @@ export const Dialog: React.FC<IProps> = ({ isOpen, onClose, onSubmit }) => {
                 format="hex"
                 value={id}
                 {...register("id", { required: true })}
-                className="mb-3"
               />
             </div>
           </div>

@@ -69,7 +69,6 @@ export const Dialog: React.FC<IProps> = ({
                 format="hex"
                 value={id}
                 {...register("id", { required: true })}
-                className="mb-3"
               />
             </div>
           </div>

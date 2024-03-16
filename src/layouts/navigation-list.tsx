@@ -26,10 +26,16 @@ export const NavigationList: React.FC = () => {
       {
         label: "Voxels",
         icon: "pi pi-box",
-        className: clsx(
-          matchPath("/voxels", location.pathname) && "active"
-        ),
+        className: clsx(matchPath("/voxels", location.pathname) && "active"),
         command: () => navigate("/voxels"),
+      },
+      {
+        label: "Symmetries",
+        icon: "pi pi-box",
+        className: clsx(
+          matchPath("/symmetries", location.pathname) && "active"
+        ),
+        command: () => navigate("/symmetries"),
       },
     ],
     [location.pathname, navigate]
