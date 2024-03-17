@@ -11,20 +11,15 @@ import {
   OrbitControls,
 } from "@react-three/drei";
 
-import { SymmetrieTypes } from "../../constants/symmetrie-types";
+import { SymmetrieTypeUtils } from "../../utilities/symmetrie-type";
 
 import { UnitCells } from "./unit-cells";
 import { useCombination } from "./use-combination";
 
-const symmetrieOptions = [
-  { name: "Solid", code: SymmetrieTypes.Solid },
-  { name: "XZ-Reflection", code: SymmetrieTypes.XZ_Reflection },
-  { name: "Y-Rotation", code: SymmetrieTypes.Y_Rotation },
-  { name: "Y-Symmetric-Rotation", code: SymmetrieTypes.Y_Symmetric_Rotation },
-];
-
 export const Symmetries: React.FC = () => {
-  const [type, setType] = useState(() => symmetrieOptions[0]);
+  const [type, setType] = useState(
+    () => SymmetrieTypeUtils.symmetrieOptions[0]
+  );
   const [color, setColore] = useState(0x0000);
   const { options, combination, setCombination } = useCombination({
     type: type.code,
@@ -82,7 +77,7 @@ export const Symmetries: React.FC = () => {
             onChange={(e) => {
               setType(e.value);
             }}
-            options={symmetrieOptions}
+            options={SymmetrieTypeUtils.symmetrieOptions}
             optionLabel="name"
             placeholder="Select a Symmetry type"
             className="md:w-14rem min-w-60"

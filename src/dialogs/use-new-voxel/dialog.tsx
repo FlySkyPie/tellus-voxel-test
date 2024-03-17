@@ -4,13 +4,7 @@ import { ColorPicker } from "primereact/colorpicker";
 import { Dropdown } from "primereact/dropdown";
 
 import { SymmetrieTypes } from "../../constants/symmetrie-types";
-
-const symmetricOptions = [
-  { name: "Solid", code: SymmetrieTypes.Solid },
-  { name: "XZ-Reflection", code: SymmetrieTypes.XZ_Reflection },
-  { name: "Y-Rotation", code: SymmetrieTypes.Y_Rotation },
-  { name: "Y-Symmetric-Rotation", code: SymmetrieTypes.Y_Symmetric_Rotation },
-];
+import { SymmetrieTypeUtils } from "../../utilities/symmetrie-type";
 
 type SymmetricItem = {
   name: string;
@@ -40,7 +34,7 @@ export const Dialog: React.FC<IProps> = ({ isOpen, onClose, onSubmit }) => {
     defaultValues: {
       id: "000000",
       name: "",
-      type: symmetricOptions[0],
+      type: SymmetrieTypeUtils.symmetrieOptions[0],
     },
   });
 
@@ -112,7 +106,7 @@ export const Dialog: React.FC<IProps> = ({ isOpen, onClose, onSubmit }) => {
                   className="md:w-14rem min-w-60"
                   value={field.value}
                   onChange={(e) => field.onChange(e.value)}
-                  options={symmetricOptions}
+                  options={SymmetrieTypeUtils.symmetrieOptions}
                   optionLabel="name"
                 />
               )}

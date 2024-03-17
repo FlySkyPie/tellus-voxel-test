@@ -9,6 +9,7 @@ import { db } from "../../db";
 import { useNewVoxel } from "../../dialogs/use-new-voxel/use-new-voxel";
 import { useConfirm } from "../../dialogs/use-confirm/use-confirm";
 import { useEditVoxel } from "../../dialogs/use-edit-voxel/use-edit-voxel";
+import { SymmetrieTypeUtils } from "../../utilities/symmetrie-type";
 
 export const Voxels: React.FC = () => {
   const voxels = useLiveQuery(() => db.voxels.toArray());
@@ -28,8 +29,16 @@ export const Voxels: React.FC = () => {
               return;
             }
 
-            await db.voxels.add(result.value);
-            console.log(result);
+            const { value: voxel } = result;
+
+            await db.transaction("rw", db.voxels, db.unitCells, async () => {
+              await db.voxels.add(voxel);
+              const cells = SymmetrieTypeUtils.createUnitCells(
+                voxel.id,
+                voxel.type
+              );
+              await db.unitCells.bulkAdd(cells);
+            });
           }}
         />
       </div>
@@ -60,8 +69,19 @@ export const Voxels: React.FC = () => {
               if (result.type === "cancel") {
                 return;
               }
-              const { value } = result;
-              await db.voxels.update(id, value);
+              const { value: nextValue } = result;
+
+              await db.transaction("rw", db.voxels, db.unitCells, async () => {
+                await db.voxels.update(id, nextValue);
+                /**
+                 * @todo clean up unit cell with previous data.
+                 */
+                const cells = SymmetrieTypeUtils.createUnitCells(
+                  nextValue.id,
+                  nextValue.type
+                );
+                await db.unitCells.bulkPut(cells);
+              });
             }}
           />
           <Button

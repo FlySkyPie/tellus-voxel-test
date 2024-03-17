@@ -1,11 +1,10 @@
-import React, { useMemo, useCallback } from "react";
+import React, { useCallback } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { useLiveQuery } from "dexie-react-hooks";
 
-import type { VoxelItem } from "../../interfaces/voxel-item";
+import type { IUnitCell } from "../../interfaces/unit-cell";
 import { db } from "../../db";
-import { IUnitCell } from "../../interfaces/unit-cell";
 
 export const UnitCells: React.FC = () => {
   const unitCells = useLiveQuery(() => db.unitCells.toArray());
@@ -28,15 +27,15 @@ export const UnitCells: React.FC = () => {
         <Column
           field="id"
           header="id"
-          body={({ id }: VoxelItem) => (
+          body={({ id }: IUnitCell) => (
             <code>{"#" + id.toString(16).padStart(6, "0")}</code>
           )}
         />
         <Column
           field="voxel_id"
           header="voxel_id"
-          body={({ id }: VoxelItem) => (
-            <code>{"#" + id.toString(16).padStart(6, "0")}</code>
+          body={({ voxel_id }: IUnitCell) => (
+            <code>{"#" + voxel_id.toString(16).padStart(6, "0")}</code>
           )}
         />
         <Column header="Color" body={renderColorColumn}></Column>
