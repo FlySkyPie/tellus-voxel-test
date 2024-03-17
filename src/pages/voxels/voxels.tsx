@@ -81,7 +81,7 @@ export const Voxels: React.FC = () => {
         </div>
       );
     },
-    [openConfirm]
+    [editVoxel, openConfirm]
   );
 
   return (

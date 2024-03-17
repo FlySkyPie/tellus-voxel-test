@@ -19,6 +19,10 @@ export class DexieDatabase extends Dexie {
     this.voxels.bulkPut([
       { id: 0x4a4a4a, name: "Stone", type: SymmetrieTypes.Solid },
     ]);
+
+    this.unitCells.bulkPut([
+      { id: 0x4a4a4a, voxel_id: 0x4a4a4a, is_primary: true },
+    ]);
   }
 }
 
