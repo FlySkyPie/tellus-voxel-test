@@ -6,14 +6,12 @@ import { useLiveQuery } from "dexie-react-hooks";
 
 import type { VoxelItem } from "../../interfaces/voxel-item";
 import { db } from "../../db";
-import { useNewVoxel } from "../../dialogs/use-new-voxel/use-new-voxel";
 import { useConfirm } from "../../dialogs/use-confirm/use-confirm";
 import { useEditVoxel } from "../../dialogs/use-edit-voxel/use-edit-voxel";
 import { SymmetrieTypeUtils } from "../../utilities/symmetrie-type";
 
 export const Voxels: React.FC = () => {
   const voxels = useLiveQuery(() => db.voxels.toArray());
-  const { dialogView, openDialog } = useNewVoxel();
   const { dialogView: editDialog, openDialog: editVoxel } = useEditVoxel();
   const { dialogView: confirmDialog, openDialog: openConfirm } = useConfirm();
 
@@ -24,7 +22,7 @@ export const Voxels: React.FC = () => {
           label="Add Voxel"
           icon="pi pi-plus"
           onClick={async () => {
-            const result = await openDialog();
+            const result = await editVoxel();
             if (result.type === "cancel") {
               return;
             }
@@ -43,7 +41,7 @@ export const Voxels: React.FC = () => {
         />
       </div>
     );
-  }, [openDialog]);
+  }, [editVoxel]);
 
   const renderColorColumn = useCallback(
     ({ id }: VoxelItem): React.ReactNode => {
@@ -65,7 +63,7 @@ export const Voxels: React.FC = () => {
             icon="pi pi-pencil"
             rounded
             onClick={async () => {
-              const result = await editVoxel(id, name, type);
+              const result = await editVoxel({ id, name, type });
               if (result.type === "cancel") {
                 return;
               }
@@ -73,9 +71,12 @@ export const Voxels: React.FC = () => {
 
               await db.transaction("rw", db.voxels, db.unitCells, async () => {
                 await db.voxels.update(id, nextValue);
-                /**
-                 * @todo clean up unit cell with previous data.
-                 */
+
+                const oldCellIds = SymmetrieTypeUtils.createUnitCells(
+                  id,
+                  type
+                ).map((item) => item.id);
+                await db.unitCells.bulkDelete(oldCellIds);
                 const cells = SymmetrieTypeUtils.createUnitCells(
                   nextValue.id,
                   nextValue.type
@@ -123,7 +124,6 @@ export const Voxels: React.FC = () => {
         <Column field="type" header="Symmetry Type"></Column>
         <Column header="Operation" body={renderEditColumn} />
       </DataTable>
-      {dialogView}
       {confirmDialog}
       {editDialog}
     </div>

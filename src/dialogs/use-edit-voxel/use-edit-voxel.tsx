@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 import { SymmetrieTypes } from "../../constants/symmetrie-types";
 
 import { Dialog } from "./dialog";
+import { VoxelItem } from "../../interfaces/voxel-item";
 
 type IResult =
   | {
@@ -19,29 +20,36 @@ type IResult =
       };
     };
 
+/**
+ * Used to store information for a "Dialog Session".
+ */
 type IToken = {
   id: string;
   isOpen: boolean;
-  value: { id: string; name: string; type: SymmetrieTypes };
+  value?: { id: string; name: string; type: SymmetrieTypes };
   resolve: (result: IResult) => void;
 };
 
 export const useEditVoxel = () => {
   const [token, setToken] = useState<IToken>();
 
-  const openDialog = useCallback(
-    (id: number, name: string, type: SymmetrieTypes) => {
-      return new Promise<IResult>((resolve) => {
-        setToken({
-          id: nanoid(),
-          isOpen: true,
-          value: { id: id.toString(16).padStart(6, "0"), name, type },
-          resolve,
-        });
+  const openDialog = useCallback((value?: VoxelItem) => {
+    return new Promise<IResult>((resolve) => {
+      const initialValue = (() => {
+        if (!value) {
+          return;
+        }
+        const { id, name, type } = value;
+        return { id: id.toString(16).padStart(6, "0"), name, type };
+      })();
+      setToken({
+        id: nanoid(),
+        isOpen: true,
+        value: initialValue,
+        resolve,
       });
-    },
-    []
-  );
+    });
+  }, []);
 
   const handleClose = useCallback(() => {
     token && token.resolve({ type: "cancel" });

@@ -5,6 +5,7 @@ import { Dropdown } from "primereact/dropdown";
 
 import { SymmetrieTypes } from "../../constants/symmetrie-types";
 import { SymmetrieTypeUtils } from "../../utilities/symmetrie-type";
+import { useMemo } from "react";
 
 type SymmetricItem = {
   name: string;
@@ -18,7 +19,7 @@ type FormValues = {
 };
 
 type IProps = {
-  value: {
+  value?: {
     id: string;
     name: string;
     type: SymmetrieTypes;
@@ -35,6 +36,21 @@ export const Dialog: React.FC<IProps> = ({
   onClose,
   onSubmit,
 }) => {
+  const defaultValues = useMemo(() => {
+    if (!value) {
+      return {
+        id: "000000",
+        name: "",
+        type: SymmetrieTypeUtils.symmetrieOptions[0],
+      };
+    }
+    return {
+      ...value,
+      type: SymmetrieTypeUtils.symmetrieOptions.find(
+        (item) => item.code === value.type
+      ),
+    };
+  }, [value]);
   const {
     control,
     register,
@@ -42,12 +58,7 @@ export const Dialog: React.FC<IProps> = ({
     formState: { errors },
     handleSubmit,
   } = useForm<FormValues>({
-    defaultValues: {
-      ...value,
-      type: SymmetrieTypeUtils.symmetrieOptions.find(
-        (item) => item.code === value.type
-      ),
-    },
+    defaultValues,
   });
 
   const [id] = watch(["id"]);
