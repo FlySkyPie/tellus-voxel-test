@@ -1,21 +1,38 @@
 import { Dialog as PriDialog } from "primereact/dialog";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { ColorPicker } from "primereact/colorpicker";
+import { Dropdown } from "primereact/dropdown";
+
+import { SymmetrieTypes } from "../../constants/symmetrie-types";
+
+const symmetricOptions = [
+  { name: "Solid", code: SymmetrieTypes.Solid },
+  { name: "XZ-Reflection", code: SymmetrieTypes.XZ_Reflection },
+  { name: "Y-Rotation", code: SymmetrieTypes.Y_Rotation },
+  { name: "Y-Symmetric-Rotation", code: SymmetrieTypes.Y_Symmetric_Rotation },
+];
+
+type SymmetricItem = {
+  name: string;
+  code: SymmetrieTypes;
+};
 
 type FormValues = {
   id: string;
   name: string;
+  type: SymmetricItem;
 };
 
 type IProps = {
   value: {
     id: string;
     name: string;
+    type: SymmetrieTypes;
   };
 
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (id: number, name: string) => void;
+  onSubmit: (id: number, name: string, type: SymmetrieTypes) => void;
 };
 
 export const Dialog: React.FC<IProps> = ({
@@ -25,12 +42,16 @@ export const Dialog: React.FC<IProps> = ({
   onSubmit,
 }) => {
   const {
+    control,
     register,
     watch,
     formState: { errors },
     handleSubmit,
   } = useForm<FormValues>({
-    defaultValues: value,
+    defaultValues: {
+      ...value,
+      type: symmetricOptions.find((item) => item.code === value.type),
+    },
   });
 
   const [id] = watch(["id"]);
@@ -45,8 +66,8 @@ export const Dialog: React.FC<IProps> = ({
     >
       <form
         className="space-y-6"
-        onSubmit={handleSubmit(({ id, name }) => {
-          onSubmit(Number(`0x${id}`), name);
+        onSubmit={handleSubmit(({ id, name, type }) => {
+          onSubmit(Number(`0x${id}`), name, type.code);
         })}
       >
         <div>
@@ -85,6 +106,28 @@ export const Dialog: React.FC<IProps> = ({
             />
           </div>
           {errors.name && <p>Name is required.</p>}
+        </div>
+        <div>
+          <label className="block text-sm font-medium leading-6 text-gray-900">
+            Symmetry Type
+          </label>
+          <div className="mt-2">
+            <Controller
+              name="type"
+              control={control}
+              render={({ field }) => (
+                <Dropdown
+                  id={field.name}
+                  className="md:w-14rem min-w-60"
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.value)}
+                  options={symmetricOptions}
+                  optionLabel="name"
+                />
+              )}
+            />
+          </div>
+          {errors.type && <p>Type is required.</p>}
         </div>
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <button

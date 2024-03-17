@@ -2,17 +2,23 @@ import type { Table } from "dexie";
 import Dexie from "dexie";
 
 import type { VoxelItem } from "./interfaces/voxel-item";
+import type { IUnitCell } from "./interfaces/unit-cell";
+import { SymmetrieTypes } from "./constants/symmetrie-types";
 
 export class DexieDatabase extends Dexie {
   voxels!: Table<VoxelItem>;
+  unitCells!: Table<IUnitCell>;
 
   constructor() {
     super("myDatabase");
     this.version(1).stores({
-      voxels: "id, name", // Primary key and indexed props
+      voxels: "id, namem, type", // Primary key and indexed props
+      unitCells: "id, is_primary, voxel_id",
     });
 
-    this.voxels.bulkPut([{ id: 0x4a4a4a, name: "Stone" }]);
+    this.voxels.bulkPut([
+      { id: 0x4a4a4a, name: "Stone", type: SymmetrieTypes.Solid },
+    ]);
   }
 }
 

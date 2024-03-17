@@ -49,14 +49,14 @@ export const Voxels: React.FC = () => {
   );
 
   const renderEditColumn = useCallback(
-    ({ id, name }: VoxelItem): React.ReactNode => {
+    ({ id, name, type }: VoxelItem): React.ReactNode => {
       return (
         <div className="flex flex-row gap-1">
           <Button
             icon="pi pi-pencil"
             rounded
             onClick={async () => {
-              const result = await editVoxel(id, name);
+              const result = await editVoxel(id, name, type);
               if (result.type === "cancel") {
                 return;
               }
@@ -100,6 +100,7 @@ export const Voxels: React.FC = () => {
         />
         <Column header="Color" body={renderColorColumn}></Column>
         <Column field="name" header="Name"></Column>
+        <Column field="type" header="Symmetry Type"></Column>
         <Column header="Operation" body={renderEditColumn} />
       </DataTable>
       {dialogView}

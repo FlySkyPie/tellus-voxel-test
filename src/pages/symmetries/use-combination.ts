@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { SymmetrieTypes } from "./symmetrie-types";
+import { SymmetrieTypes } from "../../constants/symmetrie-types";
 
 const getCombination = (type: SymmetrieTypes) => {
   if (type === SymmetrieTypes.Solid) {

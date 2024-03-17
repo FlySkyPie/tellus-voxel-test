@@ -2,6 +2,7 @@ import { nanoid } from "nanoid";
 import { useCallback, useMemo, useState } from "react";
 
 import { Dialog } from "./dialog";
+import { SymmetrieTypes } from "../../constants/symmetrie-types";
 
 type IResult =
   | {
@@ -13,6 +14,7 @@ type IResult =
       value: {
         id: number;
         name: string;
+        type: SymmetrieTypes;
       };
     };
 
@@ -46,16 +48,19 @@ export const useNewVoxel = () => {
     });
   }, [token]);
 
-  const handleSubmit = useCallback((id: number, name: string) => {
-    token && token.resolve({ type: "result", value: { id, name } });
+  const handleSubmit = useCallback(
+    (id: number, name: string, type: SymmetrieTypes) => {
+      token && token.resolve({ type: "result", value: { id, name, type } });
 
-    setToken((prev) => {
-      if (!prev) {
-        return prev;
-      }
-      return { ...prev, isOpen: false };
-    });
-  }, [token]);
+      setToken((prev) => {
+        if (!prev) {
+          return prev;
+        }
+        return { ...prev, isOpen: false };
+      });
+    },
+    [token]
+  );
 
   const dialogView = useMemo(() => {
     if (!token) {

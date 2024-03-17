@@ -11,8 +11,9 @@ import {
   OrbitControls,
 } from "@react-three/drei";
 
+import { SymmetrieTypes } from "../../constants/symmetrie-types";
+
 import { UnitCells } from "./unit-cells";
-import { SymmetrieTypes } from "./symmetrie-types";
 import { useCombination } from "./use-combination";
 
 const symmetrieOptions = [
