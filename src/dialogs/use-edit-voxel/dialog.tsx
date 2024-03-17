@@ -1,11 +1,14 @@
+import { useMemo } from "react";
 import { Dialog as PriDialog } from "primereact/dialog";
 import { Controller, useForm } from "react-hook-form";
 import { ColorPicker } from "primereact/colorpicker";
 import { Dropdown } from "primereact/dropdown";
+import { useLiveQuery } from "dexie-react-hooks";
+import { Message } from "primereact/message";
 
 import { SymmetrieTypes } from "../../constants/symmetrie-types";
 import { SymmetrieTypeUtils } from "../../utilities/symmetrie-type";
-import { useMemo } from "react";
+import { db } from "../../db";
 
 type SymmetricItem = {
   name: string;
@@ -61,7 +64,25 @@ export const Dialog: React.FC<IProps> = ({
     defaultValues,
   });
 
-  const [id] = watch(["id"]);
+  const [id, type] = watch(["id", "type"]);
+  const numberId = useMemo(() => Number(`0x${id}`), [id]);
+
+  const cellIds = useMemo(
+    () =>
+      SymmetrieTypeUtils.createUnitCells(numberId, type.code).map(
+        (item) => item.id
+      ),
+    [numberId, type.code]
+  );
+  const occupied = useLiveQuery(
+    () =>
+      db.unitCells
+        .where("id")
+        .anyOf(cellIds)
+        .and((cells) => cells.voxel_id !== numberId)
+        .first(),
+    [cellIds, numberId]
+  );
 
   return (
     <PriDialog
@@ -136,12 +157,19 @@ export const Dialog: React.FC<IProps> = ({
           </div>
           {errors.type && <p>Type is required.</p>}
         </div>
+        {occupied && (
+          <Message
+            severity="warn"
+            text="The unit cells is occupied, please change id or type."
+          />
+        )}
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <button
             type="submit"
+            disabled={!!occupied}
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Update
+            {value ? "Update" : "Add"}
           </button>
         </div>
       </form>
