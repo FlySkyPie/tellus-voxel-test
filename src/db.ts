@@ -10,7 +10,7 @@ export class DexieDatabase extends Dexie {
   unitCells!: Table<IUnitCell>;
 
   constructor() {
-    super("myDatabase");
+    super("tellus-voxel-test-database");
     this.version(1).stores({
       voxels: "id, namem, type", // Primary key and indexed props
       unitCells: "id, is_primary, voxel_id",
