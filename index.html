@@ -1,0 +1,542 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/svg+xml" href="/vite.svg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tellus Voxcel Test</title>
+    <script type="module" crossorigin="" src="/assets/index-Don9QLLE.js"></script>
+    <link rel="stylesheet" crossorigin="" href="/assets/index-Dx0oG915.css">
+  <style type="text/css" data-primereact-style-id="base">
+.p-hidden-accessible {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.p-hidden-accessible input,
+.p-hidden-accessible select {
+    transform: scale(0);
+}
+
+.p-overflow-hidden {
+    overflow: hidden;
+    padding-right: var(--scrollbar-width);
+}
+</style><style type="text/css" data-primereact-style-id="global"></style><style type="text/css" data-primereact-style-id="common">
+@layer primereact {
+    .p-component, .p-component * {
+        box-sizing: border-box;
+    }
+
+    .p-hidden {
+        display: none;
+    }
+
+    .p-hidden-space {
+        visibility: hidden;
+    }
+
+    .p-reset {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        text-decoration: none;
+        font-size: 100%;
+        list-style: none;
+    }
+
+    .p-disabled, .p-disabled * {
+        cursor: default;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    .p-component-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .p-unselectable-text {
+        user-select: none;
+    }
+
+    .p-scrollbar-measure {
+        width: 100px;
+        height: 100px;
+        overflow: scroll;
+        position: absolute;
+        top: -9999px;
+    }
+
+    @-webkit-keyframes p-fadein {
+      0%   { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    @keyframes p-fadein {
+      0%   { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .p-link {
+        text-align: left;
+        background-color: transparent;
+        margin: 0;
+        padding: 0;
+        border: none;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .p-link:disabled {
+        cursor: default;
+    }
+
+    /* Non react overlay animations */
+    .p-connected-overlay {
+        opacity: 0;
+        transform: scaleY(0.8);
+        transition: transform .12s cubic-bezier(0, 0, 0.2, 1), opacity .12s cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    .p-connected-overlay-visible {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+
+    .p-connected-overlay-hidden {
+        opacity: 0;
+        transform: scaleY(1);
+        transition: opacity .1s linear;
+    }
+
+    /* React based overlay animations */
+    .p-connected-overlay-enter {
+        opacity: 0;
+        transform: scaleY(0.8);
+    }
+
+    .p-connected-overlay-enter-active {
+        opacity: 1;
+        transform: scaleY(1);
+        transition: transform .12s cubic-bezier(0, 0, 0.2, 1), opacity .12s cubic-bezier(0, 0, 0.2, 1);
+    }
+
+    .p-connected-overlay-enter-done {
+        transform: none;
+    }
+
+    .p-connected-overlay-exit {
+        opacity: 1;
+    }
+
+    .p-connected-overlay-exit-active {
+        opacity: 0;
+        transition: opacity .1s linear;
+    }
+
+    /* Toggleable Content */
+    .p-toggleable-content-enter {
+        max-height: 0;
+    }
+
+    .p-toggleable-content-enter-active {
+        overflow: hidden;
+        max-height: 1000px;
+        transition: max-height 1s ease-in-out;
+    }
+
+    .p-toggleable-content-enter-done {
+        transform: none;
+    }
+
+    .p-toggleable-content-exit {
+        max-height: 1000px;
+    }
+
+    .p-toggleable-content-exit-active {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.45s cubic-bezier(0, 1, 0, 1);
+    }
+
+    .p-sr-only {
+        border: 0;
+        clip: rect(1px, 1px, 1px, 1px);
+        clip-path: inset(50%);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+        word-wrap: normal;
+    }
+
+    /* @todo Refactor */
+    .p-menu .p-menuitem-link {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        overflow: hidden;
+        position: relative;
+    }
+
+    
+.p-button {
+    margin: 0;
+    display: inline-flex;
+    cursor: pointer;
+    user-select: none;
+    align-items: center;
+    vertical-align: bottom;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.p-button-label {
+    flex: 1 1 auto;
+}
+
+.p-button-icon-right {
+    order: 1;
+}
+
+.p-button:disabled {
+    cursor: default;
+}
+
+.p-button-icon-only {
+    justify-content: center;
+}
+
+.p-button-icon-only .p-button-label {
+    visibility: hidden;
+    width: 0;
+    flex: 0 0 auto;
+}
+
+.p-button-vertical {
+    flex-direction: column;
+}
+
+.p-button-icon-bottom {
+    order: 2;
+}
+
+.p-buttonset .p-button {
+    margin: 0;
+}
+
+.p-buttonset .p-button:not(:last-child) {
+    border-right: 0 none;
+}
+
+.p-buttonset .p-button:not(:first-of-type):not(:last-of-type) {
+    border-radius: 0;
+}
+
+.p-buttonset .p-button:first-of-type {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.p-buttonset .p-button:last-of-type {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.p-buttonset .p-button:focus {
+    position: relative;
+    z-index: 1;
+}
+
+    
+.p-checkbox {
+    display: inline-flex;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: bottom;
+    position: relative;
+}
+
+.p-checkbox.p-checkbox-disabled {
+    cursor: auto;
+}
+
+.p-checkbox-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    
+.p-inputtext {
+    margin: 0;
+}
+
+.p-fluid .p-inputtext {
+    width: 100%;
+}
+
+/* InputGroup */
+.p-inputgroup {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+}
+
+.p-inputgroup-addon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.p-inputgroup .p-float-label {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+}
+
+.p-inputgroup .p-inputtext,
+.p-fluid .p-inputgroup .p-inputtext,
+.p-inputgroup .p-inputwrapper,
+.p-fluid .p-inputgroup .p-input {
+    flex: 1 1 auto;
+    width: 1%;
+}
+
+/* Floating Label */
+.p-float-label {
+    display: block;
+    position: relative;
+}
+
+.p-float-label label {
+    position: absolute;
+    pointer-events: none;
+    top: 50%;
+    margin-top: -0.5rem;
+    transition-property: all;
+    transition-timing-function: ease;
+    line-height: 1;
+}
+
+.p-float-label textarea ~ label,
+.p-float-label .p-mention ~ label {
+    top: 1rem;
+}
+
+.p-float-label input:focus ~ label,
+.p-float-label input:-webkit-autofill ~ label,
+.p-float-label input.p-filled ~ label,
+.p-float-label textarea:focus ~ label,
+.p-float-label textarea.p-filled ~ label,
+.p-float-label .p-inputwrapper-focus ~ label,
+.p-float-label .p-inputwrapper-filled ~ label,
+.p-float-label .p-tooltip-target-wrapper ~ label {
+    top: -0.75rem;
+    font-size: 12px;
+}
+
+.p-float-label .p-placeholder,
+.p-float-label input::placeholder,
+.p-float-label .p-inputtext::placeholder {
+    opacity: 0;
+    transition-property: all;
+    transition-timing-function: ease;
+}
+
+.p-float-label .p-focus .p-placeholder,
+.p-float-label input:focus::placeholder,
+.p-float-label .p-inputtext:focus::placeholder {
+    opacity: 1;
+    transition-property: all;
+    transition-timing-function: ease;
+}
+
+.p-input-icon-left,
+.p-input-icon-right {
+    position: relative;
+    display: inline-block;
+}
+
+.p-input-icon-left > i,
+.p-input-icon-right > i,
+.p-input-icon-left > svg,
+.p-input-icon-right > svg,
+.p-input-icon-left > .p-input-prefix,
+.p-input-icon-right > .p-input-suffix {
+    position: absolute;
+    top: 50%;
+    margin-top: -0.5rem;
+}
+
+.p-fluid .p-input-icon-left,
+.p-fluid .p-input-icon-right {
+    display: block;
+    width: 100%;
+}
+
+    
+.p-radiobutton {
+    display: inline-flex;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: bottom;
+}
+
+.p-radiobutton-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.p-radiobutton-icon {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0) scale(.1);
+    border-radius: 50%;
+    visibility: hidden;
+}
+
+.p-radiobutton-box.p-highlight .p-radiobutton-icon {
+    transform: translateZ(0) scale(1.0, 1.0);
+    visibility: visible;
+}
+
+
+    
+.p-icon {
+    display: inline-block;
+}
+
+.p-icon-spin {
+    -webkit-animation: p-icon-spin 2s infinite linear;
+    animation: p-icon-spin 2s infinite linear;
+}
+
+svg.p-icon {
+    pointer-events: auto;
+}
+
+svg.p-icon g,
+.p-disabled svg.p-icon {
+    pointer-events: none;
+}
+
+@-webkit-keyframes p-icon-spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+
+@keyframes p-icon-spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(359deg);
+        transform: rotate(359deg);
+    }
+}
+
+}
+</style><style type="text/css" data-primereact-style-id="avatar">
+@layer primereact {
+    .p-avatar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        font-size: 1rem;
+    }
+    
+    .p-avatar.p-avatar-image {
+        background-color: transparent;
+    }
+    
+    .p-avatar.p-avatar-circle {
+        border-radius: 50%;
+    }
+    
+    .p-avatar.p-avatar-circle img {
+        border-radius: 50%;
+    }
+    
+    .p-avatar .p-avatar-icon {
+        font-size: 1rem;
+    }
+    
+    .p-avatar img {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .p-avatar-clickable {
+        cursor: pointer;
+    }
+}
+</style><style type="text/css" data-primereact-style-id="panelmenu">
+@layer primereact {
+    .p-panelmenu .p-panelmenu-header-link {
+        display: flex;
+        align-items: center;
+        user-select: none;
+        cursor: pointer;
+        position: relative;
+        text-decoration: none;
+    }
+
+    .p-panelmenu .p-panelmenu-header-link:focus {
+        z-index: 1;
+    }
+
+    .p-panelmenu .p-submenu-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .p-panelmenu .p-menuitem-link {
+        display: flex;
+        align-items: center;
+        user-select: none;
+        cursor: pointer;
+        text-decoration: none;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .p-panelmenu .p-menuitem-text {
+        line-height: 1;
+    }
+}
+</style></head>
+  <body>
+    <div id="root"><div class="max-w-8xl mx-auto px-4 sm:px-6 md:px-8"><div class="hidden lg:block fixed z-20 inset-0 left-[max(0px,calc(50%-45rem))] right-auto w-[19rem] pb-10 pl-8 pr-6 overflow-y-auto"><span class="inline-flex align-items-center gap-1 px-2 py-2 my-4"><div class="p-avatar p-component p-avatar-circle" data-pc-name="avatar" data-pc-section="root"><span class="p-avatar-text" data-pc-section="label">TV</span></div><span class="font-medium text-xl">Tellus Voxel</span></span><div class="card flex justify-content-center"><div class="p-panelmenu p-component w-full md:w-20rem" data-pc-name="panelmenu" data-pc-section="root"><div class="p-panelmenu-panel active" data-pc-section="panel"><div id="pr_id_1_0_header" class="p-component p-panelmenu-header" aria-label="Home" aria-controls="pr_id_1_0_content" tabindex="0" role="button" data-pc-section="header"><div class="p-panelmenu-header-content" data-pc-section="headercontent"><a href="#" class="p-panelmenu-header-link" tabindex="-1" data-pc-section="headeraction"><span class="p-menuitem-icon pi pi-box pi pi-box" data-pc-section="headericon"></span><span class="p-menuitem-text" data-pc-section="headerlabel">Home</span></a></div></div></div><div class="p-panelmenu-panel" data-pc-section="panel"><div id="pr_id_1_1_header" class="p-component p-panelmenu-header" aria-label="Unit Cells" aria-controls="pr_id_1_1_content" tabindex="0" role="button" data-pc-section="header"><div class="p-panelmenu-header-content" data-pc-section="headercontent"><a href="#" class="p-panelmenu-header-link" tabindex="-1" data-pc-section="headeraction"><span class="p-menuitem-icon pi pi-box pi pi-box" data-pc-section="headericon"></span><span class="p-menuitem-text" data-pc-section="headerlabel">Unit Cells</span></a></div></div></div><div class="p-panelmenu-panel" data-pc-section="panel"><div id="pr_id_1_2_header" class="p-component p-panelmenu-header" aria-label="Voxels" aria-controls="pr_id_1_2_content" tabindex="0" role="button" data-pc-section="header"><div class="p-panelmenu-header-content" data-pc-section="headercontent"><a href="#" class="p-panelmenu-header-link" tabindex="-1" data-pc-section="headeraction"><span class="p-menuitem-icon pi pi-box pi pi-box" data-pc-section="headericon"></span><span class="p-menuitem-text" data-pc-section="headerlabel">Voxels</span></a></div></div></div><div class="p-panelmenu-panel" data-pc-section="panel"><div id="pr_id_1_3_header" class="p-component p-panelmenu-header" aria-label="Symmetries" aria-controls="pr_id_1_3_content" tabindex="0" role="button" data-pc-section="header"><div class="p-panelmenu-header-content" data-pc-section="headercontent"><a href="#" class="p-panelmenu-header-link" tabindex="-1" data-pc-section="headeraction"><span class="p-menuitem-icon pi pi-box pi pi-box" data-pc-section="headericon"></span><span class="p-menuitem-text" data-pc-section="headerlabel">Symmetries</span></a></div></div></div><div class="p-panelmenu-panel" data-pc-section="panel"><div id="pr_id_1_4_header" class="p-component p-panelmenu-header" aria-label="Chunk Editor" aria-controls="pr_id_1_4_content" tabindex="0" role="button" data-pc-section="header"><div class="p-panelmenu-header-content" data-pc-section="headercontent"><a href="#" class="p-panelmenu-header-link" tabindex="-1" data-pc-section="headeraction"><span class="p-menuitem-icon pi pi-box pi pi-box" data-pc-section="headericon"></span><span class="p-menuitem-text" data-pc-section="headerlabel">Chunk Editor</span></a></div></div></div></div></div></div><div class="lg:pl-[19.5rem]"><div class="max-w-3xl mx-auto relative z-20 xl:max-w-none"><div class="mt-8"><div class="markdown-body"><h1>Tellus Voxcel Test</h1>
+<p>This project used to test a voxel data format with concept of <a href="https://en.wikipedia.org/wiki/Unit_cell">Unit cell</a>.</p>
+<h2>Development</h2>
+<pre><code class="language-shell">pnpm install
+pnpm dev
+</code></pre></div></div></div></div></div></div>
+  
+
+</body></html>
