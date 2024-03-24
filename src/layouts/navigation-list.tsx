@@ -37,6 +37,14 @@ export const NavigationList: React.FC = () => {
         ),
         command: () => navigate("/symmetries"),
       },
+      {
+        label: "Chunk Editor",
+        icon: "pi pi-box",
+        className: clsx(
+          matchPath("/chunk-editor", location.pathname) && "active"
+        ),
+        command: () => navigate("/chunk-editor"),
+      },
     ],
     [location.pathname, navigate]
   );

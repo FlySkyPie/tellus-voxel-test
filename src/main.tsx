@@ -10,7 +10,8 @@ import { NotFound } from "./pages/not-found.tsx";
 import { Voxels } from "./pages/voxels/voxels.tsx";
 import { UnitCells } from "./pages/unit-cells/unit-cells.tsx";
 import { Symmetries } from "./pages/symmetries/symmetries.tsx";
-import ErrorPage from "./error-page";
+import { ChunkEditor } from "./pages/chunk-editor/chunk-editor.tsx";
+import ErrorPage from "./routes/error-page.tsx";
 import "./style.css";
 
 const router = createBrowserRouter([
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "symmetries",
         element: <Symmetries />,
+      },
+      {
+        path: "chunk-editor",
+        element: <ChunkEditor />,
       },
       {
         path: "*",
